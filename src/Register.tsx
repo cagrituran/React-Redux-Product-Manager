@@ -1,12 +1,30 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 function Register() {
+  const navigate = useNavigate()
+
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [repassword, setRepassword] = useState('')
+    const [validation, setValidation] = useState(false)
+    const [passwordvalidation, setPasswordValidation] = useState(false)
 
     const fncOk = (evt:React.FormEvent) => {
         evt.preventDefault()
         console.log(email,name,password)
+        if (password!==repassword) {
+          setPasswordValidation(true)
+        }
+
+
+        if (email === "ali@mail.com") {
+          setValidation(true)
+        }
+        else if(email !== "ali@mail.com" && password===repassword){
+          navigate('/')
+
+        }
 
     }
 
@@ -23,6 +41,12 @@ function Register() {
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                { validation && 
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> Email Already Exist
+                        <button onClick={(evt)=> setValidation(false)} type="button" className="btn-close"  aria-label="Close"></button>
+                    </div>
+                    }
 
                 <form className="mx-1 mx-md-4" onSubmit={fncOk}>
 
@@ -53,10 +77,21 @@ function Register() {
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input required type="password" id="form3Example4cd" className="form-control" />
-                      <label className="form-label" >Repeat your password</label>
+                      <input required type="password" id="form3Example4cd" className="form-control" onChange={(evt)=>setRepassword(evt.target.value)}/>
+                      <label className="form-label" >Repeat your password{
+                        password!==repassword && <p className="text-danger">password does not match!</p>
+                      }</label>
                     </div>
+                    
                   </div>
+                  <div>
+                      
+                    </div>
+                    {passwordvalidation && <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> Password does not match !
+                        <button onClick={(evt)=> setPasswordValidation(false)} type="button" className="btn-close"  aria-label="Close"></button>
+                    </div>}
+
 
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
@@ -66,7 +101,9 @@ function Register() {
                   </div>
 
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    
                     <button type="submit" className="btn btn-primary btn-lg">Register</button>
+
                   </div>
 
                 </form>
