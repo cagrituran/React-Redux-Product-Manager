@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Login from './Login';
 import NotFound from './NotFound';
+import Register from './Register';
 import Setting from './Setting';
 
 
@@ -12,6 +13,7 @@ const routes =
     <Route path='' element={<Login/>}></Route>
     <Route path='/dashboard' element={<Dashboard/>}></Route>
     <Route path='/settings' element={ <Setting /> }></Route>
+    <Route path='/register' element={<Register/>}></Route>
     <Route path='*' element={<NotFound/>}></Route>
    </Routes>
 </BrowserRouter>
