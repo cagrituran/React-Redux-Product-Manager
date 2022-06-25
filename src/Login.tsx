@@ -1,5 +1,7 @@
+import axios from "axios"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { IUser } from "./models/IUser"
 
 function Login() {
 
@@ -8,15 +10,41 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginErrorMessage, setloginErrorMessage] = useState(false)
+    const [messageError, setMessageError] = useState('')
     const fncSend = (evt: React.FormEvent) => {
         evt.preventDefault()
-        if (email === "ali@mail.com" && password === "12345") {
-            sessionStorage.setItem("user","ali@mail.com")
-            navigate('/dashboard')
+        const sendParams={
+            ref:'74430d47fa16b4c53c0fe59510752c70',
+            userEmail:email,
+            userPass:password,
+            face:'no'
         }
-        else {
-            setloginErrorMessage(true)
-        }
+        const url='https://www.jsonbulut.com/json/userLogin.php'
+        axios.get<IUser>(url,{params:sendParams}).then(res => {
+            const user=res.data.user[0]
+            const status = user.durum
+            const message = user.mesaj
+            if (status===true) {
+                const bilgi = user.bilgiler
+                if (bilgi) {
+                    sessionStorage.setItem("user",bilgi.userEmail)
+                    navigate('/dashboard')
+                    
+                }
+                
+            }
+            else{
+                setMessageError(message)
+                setloginErrorMessage(true)
+            }
+        })
+        // if (email === "ali@mail.com" && password === "12345") {
+        //     sessionStorage.setItem("user","ali@mail.com")
+        //     navigate('/dashboard')
+        // }
+        // else {
+        //     setloginErrorMessage(true)
+        // }
     }
     return (
         <>
@@ -26,7 +54,7 @@ function Login() {
                     <h2>User Login</h2>
                     { loginErrorMessage && 
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Error!</strong> Username or Password Fail!
+                        <strong>Error!</strong> {messageError}
                         <button onClick={(evt)=> setloginErrorMessage(false)} type="button" className="btn-close"  aria-label="Close"></button>
                     </div>
                     }
