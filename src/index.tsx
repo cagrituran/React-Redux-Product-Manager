@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import Login from './Login';
 import NotFound from './NotFound';
 import Register from './Register';
+import Security from './Security';
 import Setting from './Setting';
 
 
@@ -11,8 +12,8 @@ const routes =
 <BrowserRouter>
    <Routes>
     <Route path='' element={<Login/>}></Route>
-    <Route path='/dashboard' element={<Dashboard/>}></Route>
-    <Route path='/settings' element={ <Setting /> }></Route>
+    <Route path='/dashboard' element={<Security component={<Dashboard></Dashboard>}></Security>}></Route>
+    <Route path='/settings' element={ <Security component={<Setting></Setting>}></Security> }></Route>
     <Route path='/register' element={<Register/>}></Route>
     <Route path='*' element={<NotFound/>}></Route>
    </Routes>
