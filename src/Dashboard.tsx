@@ -35,7 +35,7 @@ function Dashboard() {
     <input onChange={(evt)=>setSearch(evt.target.value) } className="form-control" placeholder="search..."></input>
     <div className="row p-3">
     {arr.map((item,index)=>
-      <ProductItem pro={item}/>
+      <ProductItem key={index} pro={item}/>
     )}
     </div>
     </>
