@@ -4,11 +4,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Detail from './Detail';
 import Login from './Login';
+import NoteDetail from './NoteDetail';
 import NotFound from './NotFound';
 import Register from './Register';
 import Security from './Security';
 import Setting from './Setting';
 import { store } from './useRedux/AppStore';
+import Users from './Users';
 
 
 const routes = 
@@ -19,6 +21,8 @@ const routes =
     <Route path='/dashboard' element={<Security component={<Dashboard></Dashboard>}></Security>}></Route>
     <Route path='/settings' element={ <Security component={<Setting></Setting>}></Security> }></Route>
     <Route path='/detail' element={ <Security component={<Detail></Detail>}></Security> }></Route>
+    <Route path='/users' element={ <Security component={<Users></Users>}></Security> }></Route>
+    <Route path='/noteDetail/:index' element={ <Security component={<NoteDetail></NoteDetail>}></Security> }></Route>
     <Route path='/register' element={<Register/>}></Route>
     <Route path='*' element={<NotFound/>}></Route>
    </Routes>
